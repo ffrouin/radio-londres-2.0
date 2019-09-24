@@ -16,7 +16,7 @@ health)
 	case "$p" in
 	0)
 		echo "down - restarting"
-		/usr/local/bin/mpd /etc/mpd.conf
+		mpd /etc/mpd.conf
 		sleep 3
 		mpc play
 		;;
