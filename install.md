@@ -1,7 +1,7 @@
 # "Radio Londres 2.0" - Installation -  Ubuntu 16.04 LTS
 Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support jusqu'en avril 2023).
 
-## Déploiement des composants applicatifs
+## Déploiement et configuration des composants applicatifs
 
 ### MPD
 
