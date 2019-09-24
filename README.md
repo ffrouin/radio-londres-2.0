@@ -1,7 +1,7 @@
 # Radio Londres 2.0
 Radio Londres 2.0 est un projet citoyen visant à faire connaître le programme "Les Jours Heureux" adopté par le Conseil National de la Résistance au sortir de la 2eme guerre mondiale. Il s'agit d'une webradio qui va diffuser des archives audios. #CivicTech #FrenchTech
 
-## Prérequis
+## Prérequis
 Afin de pouvoir utiliser les données présentées dans ce document pour mettre en place votre propre instance "Radio Londres 2.0" vous avez besoin de disposer d'un équipement muni :
 . d'un [Système d'Exploitation GNU/Linux](https://fr.wikipedia.org/wiki/Liste_des_distributions_GNU/Linux)
 . d'un accès à internet :
@@ -9,7 +9,7 @@ Afin de pouvoir utiliser les données présentées dans ce document pour mettre 
 .. VDSL ou Fibre sont un bon compris pour une diffusion limitée
 . pas d'indication particulière concernant la capacité de calcul et la mémoire vive à prévoir (audit en cours)
 
-## Composants applicatifs
+## Composants applicatifs
 
 ### [MPD - Music Player Daemon](https://www.musicpd.org/)
 Ce composant applicatif s'occupe de générer un flux audio continu sur la base d'une playlist.
@@ -28,16 +28,16 @@ On pourra utiliser différents composants ayant déjà fait preuve de leur robus
 . [Apache2](http://httpd.apache.org/)
 . [Nginx](https://nginx.org/en/)
 
-## Source de données
+## Source de données
 L'idée est d'avoir un moyen industrialisé pour peupler la webradio avec les données recherchées.
 
-### Youtube
+### Youtube
 La plateforme youtube offre l'énorme avantage de contenir une masse assez impressionnante de données. Dans le cadre du projet "Radio Londres 2.0" elle permet de constituer l'ensemble de la playlist. La playlist sera initialisée au moyen de l'utilitaire [youtube-dl](https://ytdl-org.github.io/youtube-dl/index.html).
 
 ## Gestion des programmes
 Une webradio doit offrir des mécanismes de base : insertion de programmes à heures fixes, jingle de début et de fin pour encadrer des programmes, modification de la playlist, etc. Un petit script shell appelé en crontab nous permettra de répondre à ce besoin.
 
-### Script shell
+### Script shell
 Disponible dans tous les environnements GNU/Linux, bash sera utilisé.
 
 ### [Crontab](https://fr.wikipedia.org/wiki/Cron)
