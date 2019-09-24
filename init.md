@@ -20,6 +20,7 @@ Mettez-vous dans l'environnement de cet usager :
   # mkdir youtube
   # ./RadioLondres.pl init youtube
   # sudo mv youtube/* /var/lib/mpd/music/
+  # rmdir youtube
   # mpc update
 ```
 
