@@ -10,7 +10,7 @@ Afin de pouvoir utiliser les données présentées dans ce document pour mettre 
 1. d'un [Système d'Exploitation GNU/Linux](https://fr.wikipedia.org/wiki/Liste_des_distributions_GNU/Linux),
 2. d'un accès à internet :
 - ADSL attention au canal remontant qui limitera le nombre d'accès simultanés à moins de dégrader la qualité audio,
-- VDSL ou Fibre sont un bon compris pour une diffusion limitée.
+- VDSL ou Fibre Optique sont un bon compromis pour une diffusion limitée (audit en cours).
 3. pas d'indication particulière concernant la capacité de calcul et la mémoire vive à prévoir (audit en cours).
 
 ## [Installation](install.md)
