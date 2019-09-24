@@ -13,6 +13,10 @@ Afin de pouvoir utiliser les données présentées dans ce document pour mettre 
 .. VDSL ou Fibre sont un bon compris pour une diffusion limitée
 . pas d'indication particulière concernant la capacité de calcul et la mémoire vive à prévoir (audit en cours)
 
+## [Installation](install.md)
+
+# Architecture fonctionnelle
+
 ## Composants applicatifs
 
 ### [MPD - Music Player Daemon](https://www.musicpd.org/)
