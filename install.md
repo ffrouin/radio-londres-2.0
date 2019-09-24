@@ -6,9 +6,9 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 ### MPD
 
 #### Installation
-
-> # sudo apt install mpd mpc
-
+```
+  # sudo apt install mpd mpc
+```
 #### Configuration
 
 > # sudo vi /etc/mpd.conf
@@ -54,20 +54,20 @@ filesystem_charset		"UTF-8"
 id3v1_encoding			"UTF-8"
 ```
 #### Démarrage
-
-> # sudo systemctl enable mpd
-> # sudo systemctl start mpd
-
+```
+  # sudo systemctl enable mpd
+  # sudo systemctl start mpd
+```
 #### Logs
-
-> # sudo tail -f /var/log/syslog |grep mpd
-
+```
+  # sudo tail -f /var/log/syslog |grep mpd
+```
 ### Icecast2
 
 #### Installation
-
-> # sudo apt install icecast2
-
+```
+  # sudo apt install icecast2
+```
 #### Configuration
 
 > # sudo vi /etc/icecast2/icecast.xml
@@ -85,20 +85,20 @@ id3v1_encoding			"UTF-8"
 ```
 
 #### Démarrage
-
-> # sudo systemctl enable icecast2
-> # sudo systemctl start icecast2
-
+```
+  # sudo systemctl enable icecast2
+  # sudo systemctl start icecast2
+```
 #### Logs
-
-> # sudo tail -f /var/log/icecast2/error.log
-
+```
+  # sudo tail -f /var/log/icecast2/error.log
+```
 ### Nginx
 
 #### Installation
-
-> # sudo apt-get install nginx
-
+```
+  # sudo apt-get install nginx
+```
 #### Configuration
 
 > # sudo vi /etc/nginx/sites-enabled/default
