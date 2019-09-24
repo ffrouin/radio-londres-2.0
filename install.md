@@ -163,6 +163,6 @@ server {
 
 #### Logs
 
-> # sudo tail -f /var/log/nginx/error.log
+> # sudo tail -f /var/log/nginx/error.log
 
 ## Initialisation de la playlist
