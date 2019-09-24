@@ -7,11 +7,11 @@ Radio Londres 2.0 est aussi un projet citoyen visant à faire connaître les lut
 
 ## Prérequis
 Afin de pouvoir utiliser les données présentées dans ce document pour mettre en place votre propre instance "Radio Londres 2.0" vous avez besoin de disposer d'un équipement muni :
-. d'un [Système d'Exploitation GNU/Linux](https://fr.wikipedia.org/wiki/Liste_des_distributions_GNU/Linux)
-. d'un accès à internet :
-.. ADSL attention au canal remontant qui limitera le nombre d'accès simultanés à moins de dégrader la qualité audio)
-.. VDSL ou Fibre sont un bon compris pour une diffusion limitée
-. pas d'indication particulière concernant la capacité de calcul et la mémoire vive à prévoir (audit en cours)
++ d'un [Système d'Exploitation GNU/Linux](https://fr.wikipedia.org/wiki/Liste_des_distributions_GNU/Linux)
++ d'un accès à internet :
+++ ADSL attention au canal remontant qui limitera le nombre d'accès simultanés à moins de dégrader la qualité audio)
+++ VDSL ou Fibre sont un bon compris pour une diffusion limitée
++ pas d'indication particulière concernant la capacité de calcul et la mémoire vive à prévoir (audit en cours)
 
 ## [Installation](install.md)
 
