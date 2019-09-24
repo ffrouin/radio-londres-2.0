@@ -21,7 +21,7 @@ foreach (@sources) {
 		($cat,$ytref) = ($1, $2);
 		if ($mode eq 'init') {
 			system("mkdir \"$dest/$cat\"") unless (-d "$dest/$cat");
-			system("cd \"$dest/$cat\" && /usr/local/bin/youtube-dl -x --audio-format vorbis https://www.youtube.com/watch?v=$ytref --verbose");
+			system("cd \"$dest/$cat\" && youtube-dl -x --audio-format vorbis https://www.youtube.com/watch?v=$ytref --verbose");
 		} elsif ($mode eq 'update') {
 		}
 	}
