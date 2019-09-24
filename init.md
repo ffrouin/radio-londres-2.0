@@ -42,3 +42,7 @@ https://VOTRE_NOM_D_HOTE:8080/RadioLondres.ogg
 ## Mise en place de la contrab
 
 Insérer le contenu du fichier [crontab.txt](https://raw.githubusercontent.com/ffrouin/radio-londres-2.0/master/crontab.txt) dans la crontab de l'usager retenu pour gérer la programmation de "Radio Londres 2.0"
+
+```
+  # crontab -e
+```
