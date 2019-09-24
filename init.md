@@ -1,5 +1,15 @@
 # Initialisation des données applicatives de "Radio Londres 2.0"
 
+Avec l'installation précedemment réalisée, tous les usagers du poste VOTRE_NOM_D_HOTE peuvent manipuler le daemon MPD. Si vous souhaitez restreindre cet accès, vous pouvez le protéger avec un login et mot de passe ([voir documentation MPD](https://www.musicpd.org/doc/html/user.html#permissions-and-passwords))
+
+Vous pouvez donc choisir un utilisateur existant ou en créer un nouveau pour ce besoin.
+
+Mettez-vous dans l'environnement de cet usager :
+
+```
+  # sudo su - mon_usager
+```
+
 ## Téléchargement de la playlist
 
 ```
