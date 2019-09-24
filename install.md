@@ -165,4 +165,4 @@ server {
 
 > # sudo tail -f /var/log/nginx/error.log
 
-## Initialisation de la playlist
+## [Initialisation](init.md)
