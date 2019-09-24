@@ -3,7 +3,7 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 
 ## Ubuntu 16.04 LTS - Déploiement des composants applicatifs
 
-### MPD
+### MPD
 
 #### Installation
 
@@ -17,6 +17,6 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 
   sudo apt install icecast2
 
-### Configuration
+### Configuration
 
-## Initialisation de la playlist
+## Initialisation de la playlist
