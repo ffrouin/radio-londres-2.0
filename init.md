@@ -15,7 +15,10 @@ Mettez-vous dans l'environnement de cet usager :
 ```
   # wget https://raw.githubusercontent.com/ffrouin/radio-londres-2.0/master/RadioLondres.pl
   # chmod +x RadioLondres.pl
-  # ./RadioLondres.pl
+  # mkdir youtube
+  # ./RadioLondres.pl init youtube
+  # sudo mv youtube/* /var/lib/mpd/music
+  # mpc update
 ```
 
 ## Insertion de la playlist musicale
