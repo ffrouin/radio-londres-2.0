@@ -46,7 +46,7 @@ La plateforme youtube offre l'énorme avantage de contenir une masse assez impre
 Une webradio doit offrir des mécanismes de base : insertion de programmes à heures fixes, jingle de début et de fin pour encadrer des programmes, modification de la playlist, etc. Un petit script shell appelé en crontab nous permettra de répondre à ce besoin.
 
 ### Scripts
-Disponible dans tous les environnements GNU/Linux, [bash](https://www.gnu.org/software/bash/) et [perl](https://www.perl.org/) seront utilisés.
+Disponible dans tous les environnements GNU/Linux, [bash](https://www.gnu.org/software/bash/) sera utilisé.
 
 ### [Crontab](https://fr.wikipedia.org/wiki/Cron)
 La crontab permet d'appeler des commandes à heure fixe en environnement GNU/Linux. Elle sera utilisée pour constituer la grille des programmes.
