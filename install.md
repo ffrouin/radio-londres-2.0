@@ -105,7 +105,7 @@ id3v1_encoding			"UTF-8"
 
 ```
 server {
-	listen 51.15.178.55:8080;
+	listen VOTRE_IP_SERVEUR:8080;
 	server_name VOTRE_NOM_D_HOTE;
 
 	root /var/www/VOTRE_NOM_D_HOTE/htdocs;
