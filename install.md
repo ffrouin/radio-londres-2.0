@@ -7,11 +7,11 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 
 #### Installation
 
-> sudo apt install mpd mpc
+> # sudo apt install mpd mpc
 
 #### Configuration
 
-> sudo vi /etc/mpd.conf
+> # sudo vi /etc/mpd.conf
 
 ```
 music_directory		"/var/lib/mpd/music"
@@ -53,16 +53,25 @@ volume_normalization		"yes"
 filesystem_charset		"UTF-8"
 id3v1_encoding			"UTF-8"
 ```
+#### Démarrage
+
+> # sudo systemctl enable mpd
+> # sudo systemctl start mpd
+
+#### Logs
+
+> # sudo tail -f /var/log/mpd.log
+> # sudo tail -f /var/log/syslog |grep mpd
 
 ### Icecast2
 
 #### Installation
 
-> sudo apt install icecast2
+> # sudo apt install icecast2
 
-### Configuration
+#### Configuration
 
-> sudo vi /etc/icecast2/icecast.xml
+> # sudo vi /etc/icecast2/icecast.xml
 
 ```
 <icecast>
@@ -75,5 +84,15 @@ id3v1_encoding			"UTF-8"
       <admin-password>VOTRE_MOT_DE_PASSE_ADMIN</admin-password>
 </authentication>
 ```
+
+#### Démarrage
+
+> # sudo systemctl enable icecast2
+> # sudo systemctl start icecast2
+
+#### Logs
+
+> # sudo tail -f /var/log/icecast2/access.log
+> # sudo tail -f /var/log/icecast2/error.log
 
 ## Initialisation de la playlist
