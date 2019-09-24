@@ -7,7 +7,7 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 
 #### Installation
 
-  sudo apt install mpd mpc
+> sudo apt install mpd mpc
 
 #### Configuration
 
@@ -15,7 +15,7 @@ Nous avons documenté le déploiement en environnement Ubuntu 16.04 LTS (support
 
 #### Installation
 
-  sudo apt install icecast2
+> sudo apt install icecast2
 
 ### Configuration
 
