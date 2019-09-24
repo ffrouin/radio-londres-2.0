@@ -1,0 +1,26 @@
+# Vérification MPD démarré et publication web
+* * * * * ~/RadioLondres.sh health; ~/RadioLondres.sh publish-current
+
+# Horloge 11h
+0 11 * * * ~/RadioLondres.sh bigben add
+3 11 * * * ~/RadioLondres.sh bigben del
+
+# Journal 6h,13h,20h
+0 7,13,20 * * * ~/RadioLondres.sh media add
+15 7,13,20 * * * ~/RadioLondres.sh media del
+
+# Humour
+5 9,23 * * * ~/RadioLondres.sh humour add
+14 9,23 * * * ~/RadioLondres.sh humour del
+
+# Gilets Jaunes
+30 * * * * ~/RadioLondres.sh gj add
+50 * * * * ~/RadioLondres.sh gj del
+
+# Politique
+15,45 * * * * ~/RadioLondres.sh politique add
+25,55 * * * * ~/RadioLondres.sh politique del
+
+# Radio Londres
+0 0,1,2,3,4,5,6,8,9,10,12,14,15,16,17,18,19,21,22,23 * * * ~/RadioLondres.sh radioLondres add
+10 0,1,2,3,4,5,6,8,9,10,12,14,15,16,17,18,19,21,22,23 * * * ~/RadioLondres.sh radioLondres del
