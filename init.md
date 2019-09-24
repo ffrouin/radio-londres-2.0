@@ -17,7 +17,7 @@ Mettez-vous dans l'environnement de cet usager :
   # chmod +x RadioLondres.pl
   # mkdir youtube
   # ./RadioLondres.pl init youtube
-  # sudo mv youtube/* /var/lib/mpd/music
+  # sudo mv youtube/* /var/lib/mpd/music/
   # mpc update
 ```
 
