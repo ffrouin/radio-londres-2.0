@@ -60,9 +60,7 @@ id3v1_encoding			"UTF-8"
 
 #### Logs
 
-> # sudo tail -f /var/log/mpd.log
-
-> # sudo tail -f /var/log/syslog |grep mpd
+> # sudo tail -f /var/log/syslog |grep mpd
 
 ### Icecast2
 
@@ -92,8 +90,6 @@ id3v1_encoding			"UTF-8"
 > # sudo systemctl start icecast2
 
 #### Logs
-
-> # sudo tail -f /var/log/icecast2/access.log
 
 > # sudo tail -f /var/log/icecast2/error.log
 
@@ -166,8 +162,6 @@ server {
 > # sudo systemctl start nginx
 
 #### Logs
-
-> # sudo tail -f /var/log/nginx/access.log
 
 > # sudo tail -f /var/log/nginx/error.log
 
