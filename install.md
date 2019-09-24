@@ -157,12 +157,12 @@ server {
 ```
 
 #### Démarrage
-
-> # sudo systemctl enable nginx
-> # sudo systemctl start nginx
-
+```
+  # sudo systemctl enable nginx
+  # sudo systemctl start nginx
+```
 #### Logs
-
-> # sudo tail -f /var/log/nginx/error.log
-
+```
+  # sudo tail -f /var/log/nginx/error.log
+```
 ## [Initialisation](init.md)
