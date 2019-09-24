@@ -33,8 +33,8 @@ Ce composant applicatif a pour fonction de donner accès au service de diffusion
 Il permettra également de présenter le projet: [Radio Londres 2.0](https://freddy.linuxtribe.fr/radio-londres)
 
 On pourra utiliser différents composants ayant déjà fait preuve de leur robustesse dans ce domaine :
-. [Apache2](http://httpd.apache.org/)
-. [Nginx](https://nginx.org/en/)
++ [Apache2](http://httpd.apache.org/)
++ [Nginx](https://nginx.org/en/)
 
 ## Source de données
 L'idée est d'avoir un moyen industrialisé pour peupler la webradio avec les données recherchées.
