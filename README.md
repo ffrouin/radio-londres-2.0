@@ -36,7 +36,7 @@ On pourra utiliser différents composants ayant déjà fait preuve de leur robus
 + [Apache2](http://httpd.apache.org/)
 + [Nginx](https://nginx.org/en/)
 
-## Source de données
+## Sources de données
 L'idée est d'avoir un moyen industrialisé pour peupler la webradio avec les données recherchées.
 
 ### Youtube
@@ -45,8 +45,8 @@ La plateforme youtube offre l'énorme avantage de contenir une masse assez impre
 ## Gestion des programmes
 Une webradio doit offrir des mécanismes de base : insertion de programmes à heures fixes, jingle de début et de fin pour encadrer des programmes, modification de la playlist, etc. Un petit script shell appelé en crontab nous permettra de répondre à ce besoin.
 
-### Script shell
-Disponible dans tous les environnements GNU/Linux, bash sera utilisé.
+### Scripts
+Disponible dans tous les environnements GNU/Linux, [bash](https://www.gnu.org/software/bash/) et [perl](https://www.perl.org/) seront utilisés.
 
 ### [Crontab](https://fr.wikipedia.org/wiki/Cron)
 La crontab permet d'appeler des commandes à heure fixe en environnement GNU/Linux. Elle sera utilisée pour constituer la grille des programmes.
