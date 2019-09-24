@@ -132,8 +132,6 @@ server {
 	proxy_set_header X-Forwarded-Server $host;
 	proxy_set_header X-Real-IP $remote_addr;
 	location / {
-		proxy_pass http://127.0.0.1:8000/radioLondres.ogg;
-		allow VOTRE_IP_CLIENT;
 		deny all;
 	}
 	location /radioLondres.ogg {
