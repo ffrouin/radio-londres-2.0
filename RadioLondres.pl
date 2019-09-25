@@ -6,7 +6,7 @@ sub usage {
 }
 
 usage unless (defined($ARGV[0]));
-usage unless ($ARGV[0] =~ /^(init|update$)/);
+usage unless ($ARGV[0] =~ /^(init|update)$/);
 usage unless (defined($ARGV[1]));
 usage unless (-d "$ARGV[1]");
 
