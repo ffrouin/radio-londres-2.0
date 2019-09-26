@@ -24,7 +24,7 @@ Mettez-vous dans l'environnement de cet usager :
   # mpc update
 ```
 
-## Insertion de la playlist musicale
+## Insertion de la playlist musicale
 ```
  # mpc ls chanson |mpc add
  # mpc ls accordeon |mpc add
