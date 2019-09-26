@@ -3,8 +3,6 @@ Radio Londres 2.0 est un projet citoyen visant à faire connaître le programme 
 
 Radio Londres 2.0 est aussi un projet citoyen visant à faire connaître les luttes sociales peu ou mal médiatisées par les médias traditionnels. Dans notre cas, c'est la lutte des #GiletsJaunes dont certains évênements, interviews seront intégrés à la playlist.
 
-#CivicTech #FrenchTech
-
 ## Prérequis
 Afin de pouvoir utiliser les données présentées dans ce document pour mettre en place votre propre instance "Radio Londres 2.0" vous avez besoin de disposer d'un équipement muni :
 1. d'un [Système d'Exploitation GNU/Linux](https://fr.wikipedia.org/wiki/Liste_des_distributions_GNU/Linux),
