@@ -49,6 +49,22 @@ audio_output {
 	public		"yes"			# optional
 	mixer_type      "software"              # optional
 }
+audio_output {
+	type		"shout"
+	encoding	"ogg"			# optional
+	name		"Radio Londres Low"
+	host		"localhost"
+	port		"8000"
+	mount		"/radioLondres_low.ogg"
+	password	"VOTRE_MOT_DE_PASSE_SOURCE"
+	bitrate		"32"
+	format		"44100:16:1"
+	protocol	"icecast2"		# optional
+	user		"source"		# optional
+	genre		"mixed"		# optional
+	public		"yes"			# optional
+	mixer_type      "software"              # optional
+}
 volume_normalization		"yes"
 filesystem_charset		"UTF-8"
 id3v1_encoding			"UTF-8"
@@ -138,7 +154,12 @@ server {
 		proxy_pass http://127.0.0.1:8000/radioLondres.ogg;
 		allow all;
 	}
-
+	
+	location /radioLondres_low.ogg {
+		proxy_pass http://127.0.0.1:8000/radioLondres_low.ogg;
+		allow all;
+	}
+	
 	location /admin/ {
 		proxy_pass http://127.0.0.1:8000/;
 		allow VOTRE_IP_CLIENT;
