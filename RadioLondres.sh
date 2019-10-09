@@ -69,12 +69,14 @@ radioLondres)
 	add)
 		insert jingle/lfpaf_footer.ogg
 		insert_rand radioLondres
+		insert jingle/lfpaf_header2.ogg
 		insert_rand cnr
 		insert jingle/lfpaf_header.ogg
 		;;
 	del)
 		delete jingle/lfpaf_header.ogg
 		delete_rand radioLondres
+		delete jingle/lfpaf_header2.ogg
 		delete_rand cnr
 		delete jingle/lfpaf_footer.ogg
 		;;
@@ -88,12 +90,10 @@ vp)
         add)
 		insert jingle/$1_footer.ogg
 		insert_rand $1
-		insert jingle/Notre_President_sur_les_violences_policieres_-_L_etat_de_droit-fcWZSfG0aCs.ogg
 		insert jingle/$1_header.ogg
                 ;;
         del)
 		delete jingle/$1_header.ogg
-		delete jingle/Notre_President_sur_les_violences_policieres_-_L_etat_de_droit-fcWZSfG0aCs.ogg
 		delete_rand $1
 		delete jingle/$1_footer.ogg
                 ;;
