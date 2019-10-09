@@ -9,7 +9,7 @@ function usage {
 	echo "	$0 {health|publish-current}"
 	echo
 	echo "	$0 tools del <song_name>"
-	echo "	$0 tools check-playlist"
+	echo "	$0 tools {check-playlist|init}"
 	exit 1;
 }
 
@@ -18,7 +18,12 @@ function insert {
 }
 
 function insert_rand {
-	$MPC ls $1 |grep -vf $TMP/last.$1| shuf -n 1 > $TMP/last.$1
+	
+	if [ -z "$2" ]; then
+		$MPC ls $1 |grep -vf $TMP/last.$1| shuf -n 1 > $TMP/last.$1
+	else
+		$MPC ls $1 |grep -vf $TMP/last.$1| shuf -n $2 > $TMP/last.$1
+	fi
 	cat $TMP/last.$1 |$MPC insert
 }
 
@@ -28,8 +33,10 @@ function delete {
 }
 
 function delete_rand {
-	$MPC playlist > $TMP/RadioLondres.delete_rand.playlist
-	grep -f $TMP/last.$1 -nr $TMP/RadioLondres.delete_rand.playlist |awk -F: '{print $1}' |$MPC del
+	while read s; do
+		$MPC playlist > $TMP/RadioLondres.delete_rand.playlist
+		grep "$s" -nr $TMP/RadioLondres.delete_rand.playlist |awk -F: '{print $1}' |$MPC del
+	done <$TMP/last.$1
 }
 
 case "$1" in
@@ -68,7 +75,7 @@ radioLondres)
 	case "$2" in
 	add)
 		insert jingle/lfpaf_footer.ogg
-		insert_rand radioLondres
+		insert_rand radioLondres 3
 		insert jingle/lfpaf_header2.ogg
 		insert_rand cnr
 		insert jingle/lfpaf_header.ogg
@@ -90,12 +97,10 @@ vp)
         add)
 		insert jingle/$1_footer.ogg
 		insert_rand $1
-		insert jingle/Notre_President_sur_les_violences_policieres_-_L_etat_de_droit-fcWZSfG0aCs.ogg
 		insert jingle/$1_header.ogg
                 ;;
         del)
 		delete jingle/$1_header.ogg
-		delete jingle/Notre_President_sur_les_violences_policieres_-_L_etat_de_droit-fcWZSfG0aCs.ogg
 		delete_rand $1
 		delete jingle/$1_footer.ogg
                 ;;
@@ -105,12 +110,12 @@ gj|politique)
 	case "$2" in
 	add)
 		insert jingle/$1_footer.ogg
-		insert_rand gj
+		insert_rand $1
 		insert jingle/$1_header.ogg
 		;;
 	del)
 		delete jingle/$1_header.ogg
-		delete_rand gj
+		delete_rand $1
 		delete jingle/$1_footer.ogg
 		;;
 	*)
@@ -138,6 +143,17 @@ tools)
 		;;
 	check-playlist)
 		/usr/local/bin/mpc playlist |grep -v chanson|grep -v accordeon|grep -v jazz
+		;;
+	init)
+		$MPC stop
+		$MPC clear
+		$MPC ls chanson| $MPC add
+		$MPC ls jazz | $MPC add
+		$MPC ls accordeon | $MPC add
+		for i in `seq 1 100`; do
+			$MPC shuffle
+		done
+		$MPC play
 		;;
 	*)
 		usage
