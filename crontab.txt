@@ -1,5 +1,27 @@
-# Vérification MPD démarré et publication web
-* * * * * ~/RadioLondres.sh health; ~/RadioLondres.sh publish-current
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+# Publish song refs on website
+* * * * * ~/RadioLondres.sh health; ~/RadioLondres.sh publish-current; sleep 20; ~/RadioLondres.sh publish-current; sleep 20; ~/RadioLondres.sh publish-current
 
 # Horloge 11h
 0 11 * * * ~/RadioLondres.sh bigben add
@@ -7,19 +29,23 @@
 
 # Journal 6h,13h,20h
 0 7,13,20 * * * ~/RadioLondres.sh media add
-15 7,13,20 * * * ~/RadioLondres.sh media del
+55 7,13,20 * * * ~/RadioLondres.sh media del
 
 # Humour
 5 9,23 * * * ~/RadioLondres.sh humour add
-14 9,23 * * * ~/RadioLondres.sh humour del
+5 10,0 * * * ~/RadioLondres.sh humour del
 
 # Gilets Jaunes
 30 * * * * ~/RadioLondres.sh gj add
-50 * * * * ~/RadioLondres.sh gj del
+55 * * * * ~/RadioLondres.sh gj del
+
+# Violences Policieres
+45 * * * * ~/RadioLondres.sh vp add
+5 * * * * ~/RadioLondres.sh vp del
 
 # Politique
-15,45 * * * * ~/RadioLondres.sh politique add
-25,55 * * * * ~/RadioLondres.sh politique del
+15 * * * * ~/RadioLondres.sh politique add
+35 * * * * ~/RadioLondres.sh politique del
 
 # Radio Londres
 0 0,1,2,3,4,5,6,8,9,10,12,14,15,16,17,18,19,21,22,23 * * * ~/RadioLondres.sh radioLondres add

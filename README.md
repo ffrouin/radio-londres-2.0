@@ -1,7 +1,7 @@
 # [Radio Londres 2.0](https://freddy.linuxtribe.fr/radio-londres/)
 Radio Londres 2.0 est un projet citoyen visant à faire connaître le programme "Les Jours Heureux" adopté par le Conseil National de la Résistance au sortir de la 2eme guerre mondiale. Il s'agit d'une webradio qui va diffuser des archives audios.
 
-Radio Londres 2.0 est aussi un projet citoyen visant à faire connaître les luttes sociales peu ou mal médiatisées par les médias traditionnels. Dans notre cas, c'est la lutte des #GiletsJaunes dont certains évênements, interviews seront intégrés à la playlist.
+Radio Londres 2.0 est aussi un projet citoyen visant à faire connaître les luttes sociales peu ou mal médiatisées par les médias traditionnels. Dans notre cas, c'est la lutte contre la #LoiTravail, la lutte des #GiletsJaunes, la lutte des quartiers contre les #ViolencesPolicieres dont certains évênements, interviews seront intégrés à la playlist.
 
 ## Prérequis
 Afin de pouvoir utiliser les données présentées dans ce document pour mettre en place votre propre instance "Radio Londres 2.0" vous avez besoin de disposer d'un équipement muni :
