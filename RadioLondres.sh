@@ -15,6 +15,8 @@ export ICECAST_PWD=YOUR_PASSWORD
 
 export MPD=/usr/local/bin/mpd
 export MPC=/usr/local/bin/mpc
+export CURRENT=/var/lib/mpd/RadioLondres/RadioLondres.current
+export LAST=/var/lib/mpd/RadioLondres/RadioLondres.last
 export TMP=/var/lib/mpd/RadioLondres/tmp
 export LOG=/var/lib/mpd/RadioLondres/log
 
@@ -31,13 +33,17 @@ function log {
 	echo "[$(date)]	$1 $2" >>$LOG/$(date +%Y%m%d)_radioLondres.log
 }
 
+function log_cron {
+	echo "[$(date)]	$1 $2" >>$LOG/$(date +%Y%m%d)_cron_radioLondres.log
+}
+
 function insert {
-	log insert $1
-	$MPC insert $1
+	log_cron insert "$1"
+	$MPC insert "$1"
 }
 
 function insert_rand {
-	log insert_rand $1
+	log_cron insert_rand "$1"
 	if [ -z "$2" ]; then
 		$MPC ls $1 |grep -vf $TMP/last.$1| shuf -n 1 > $TMP/last.$1
 	else
@@ -45,29 +51,30 @@ function insert_rand {
 	fi
 	cat $TMP/last.$1 |$MPC insert
 	while read s; do
-		log insert_rand $s
+		log_cron insert_rand "$s"
 	done <$TMP/last.$1
 }
 
 function delete {
-	log delete $1
+	log_cron delete "$1"
 	$MPC playlist > $TMP/RadioLondres.delete.playlist
-	grep $1 -nr $TMP/RadioLondres.delete.playlist |awk -F: '{print $1}' |$MPC del
+	grep "$1" -nr $TMP/RadioLondres.delete.playlist |awk -F: '{print $1}' |$MPC del
 }
 
 function delete_rand {
-	log delete_rand $1
+	log_cron delete_rand "$1"
 	while read s; do
 		$MPC playlist > $TMP/RadioLondres.delete_rand.playlist
 		grep "$s" -nr $TMP/RadioLondres.delete_rand.playlist |awk -F: '{print $1}' |$MPC del
-		log delete_rand $s
+		log_cron delete_rand "$s"
 	done <$TMP/last.$1
 }
 
 case "$1" in
 publish-current)
-	$MPC current > ~/RadioLondres/RadioLondres.current
-	scp ~/RadioLondres/RadioLondres.current YOUR_HOST:/tmp/ 
+	$MPC current > $CURRENT
+	scp $CURRENT YOUR_WEB_HOST:/tmp/ 
+	scp $LOG/$(date +%Y%m%d)_radioLondres.log YOUR_WEB_HOST:/tmp/RadioLondres.history
 	;;
 health)
 	p=$(ps -edf | grep -v grep |grep -c mpd.conf)
@@ -83,10 +90,17 @@ health)
 	esac
 	;;
 log)
-	export CLIENTS=$(wget --user=admin --password=$ICECAST_PWD http://localhost:8000/admin/listmounts.xsl --quiet -O - |grep "Listener(s)" | head -1 | perl -pe 's/^.*(\d+).*$/$1/')
-	export CLIENTS_LOW=$(wget --user=admin --password=$ICECAST_PWD http://localhost:8000/admin/listmounts.xsl --quiet -O - |grep "Listener(s)" | tail -1 | perl -pe 's/^.*(\d+).*$/$1/')
+	for i in `seq 1 58`;
+	do
+		sleep 1
+		if ! [ "$($MPC current)" = "$(cat $LAST)" ]; then
+			$MPC current >$LAST
+			export CLIENTS=$(wget --user=admin --password=$ICECAST_PWD http://localhost:8000/admin/listmounts.xsl --quiet -O - |grep "Listener(s)" | head -1 | perl -pe 's/^.*(\d+).*$/$1/')
+			export CLIENTS_LOW=$(wget --user=admin --password=$ICECAST_PWD http://localhost:8000/admin/listmounts.xsl --quiet -O - |grep "Listener(s)" | tail -1 | perl -pe 's/^.*(\d+).*$/$1/')
 
-	echo "[$(date)]	[HQ:$CLIENTS LOW:$CLIENTS_LOW] $($MPC status | head -1)" >>$LOG/$(date +%Y%m%d)_radioLondres.log
+			echo "[$(date)]	[HQ:$CLIENTS LOW:$CLIENTS_LOW] $($MPC status | head -1)" >>$LOG/$(date +%Y%m%d)_radioLondres.log
+		fi
+	done
 	;;
 bigben)
 	case "$2" in

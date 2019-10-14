@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+my ($time,$song,$ref) = (undef,undef,undef);
+
+if ($ARGV[0] eq 'current') {
+
+	$song = `cat /tmp/RadioLondres.current`;
+
+	if($song =~ /^([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+		($song,$ref)=($2,$3);
+		$song =~ s/\_/ /g;
+		print "<div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div>\n";
+	} elsif ($song =~ /^([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+		($song,$ref)=($2,$3);
+		$song =~ s/\_/ /g;
+		print "<div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div>\n";
+	} else {
+		print "Jingle\n";
+	}
+} elsif ($ARGV[0] eq 'history') {
+	@playlist = `cat /tmp/RadioLondres.history`;
+
+	my $l = $#playlist;
+	while($l >= 0) {
+		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) ([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$song,$ref) = ($1,$3,$4);
+			$song =~ s/\_/ /g;
+			print "<div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div>\n";
+		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) ([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$song,$ref) = ($1,$3,$4);
+			$song =~ s/\_/ /g;
+			print "<div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div>\n";
+		}
+		$l--;
+	}
+}
