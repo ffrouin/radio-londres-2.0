@@ -22,6 +22,7 @@
 # m h  dom mon dow   command
 # Publish song refs on website
 * * * * * ~/RadioLondres.sh health; ~/RadioLondres.sh publish-current; sleep 20; ~/RadioLondres.sh publish-current; sleep 20; ~/RadioLondres.sh publish-current
+* * * * * ~/RadioLondres.sh log
 
 # Horloge 11h
 0 11 * * * ~/RadioLondres.sh bigben add
