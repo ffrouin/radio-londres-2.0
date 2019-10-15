@@ -1,36 +1,96 @@
 #!/usr/bin/perl
 
-my ($time,$song,$ref) = (undef,undef,undef);
+sub clean {
+	${$_[0]} =~ s/\_/ /g;
+	if (${$_[0]} =~ /^.{100}.+$/) {
+		${$_[0]} =~ s/^(.{100}).+$/$1 \(\.\.\.\)/;
+	}
+}
+
+sub getCat {
+	if ($_[0] eq 'gj') {
+		return('#GiletsJaunes');
+	} elsif ($_[0] eq 'vp') {
+		return('#ViolencesPolicieres');
+	} elsif ($_[0] eq 'cnr') {
+		return("#CNR");
+	}
+	return($_[0]);
+}
+
+sub addSelector {
+	${$_[0]} .= '<input type="checkbox" id="'.$_[1].'" name="'.$_[1].'">';
+	${$_[0]} .= '<label for="'.$_[1].'">'.$_[2].'</label>';
+}
+
+my ($time,$cat,$song,$ref) = (undef,undef,undef,undef);
+my ($users,$users_low);
+
+my $selector = '<div><input type="checkbox" id="tout" name="tout" checked>';
+$selector   .= '<label for="tout">Tout</label>';
+addSelector(\$selector,'chanson','chanson');
+addSelector(\$selector,'accordeon','accordeon');
+addSelector(\$selector,'jazz','jazz');
+addSelector(\$selector,'cnr','#CNR');
+addSelector(\$selector,'gj','#GiletsJaunes');
+addSelector(\$selector,'politique','Politique');
+addSelector(\$selector,'vp','#ViolencesPolicieres');
+addSelector(\$selector,'humour','humour');
+addSelector(\$selector,'media','media');
+$selector   .= '</div>';
+
+my $javascript = '<script type="text/javascript" src="/wp-content/themes/osmosis-child/radiolondres.js"></script>';
 
 if ($ARGV[0] eq 'current') {
 
 	$song = `cat /tmp/RadioLondres.current`;
 
 	if($song =~ /^([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
-		($song,$ref)=($2,$3);
-		$song =~ s/\_/ /g;
-		print "<div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div>\n";
+		($cat,$song,$ref)=($1,$2,$3);
+		clean(\$song);
+		print "<div class=\"rl-current\"><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category-current\">".getCat($cat)."</div></div>\n";
 	} elsif ($song =~ /^([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
-		($song,$ref)=($2,$3);
-		$song =~ s/\_/ /g;
-		print "<div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div>\n";
+		($cat,$song,$ref)=($1,$2,$3);
+		clean(\$song);
+		print "<div class=\"rl-current\"><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category-current\">".getCat($cat)."</div></div>\n";
 	} else {
 		print "Jingle\n";
 	}
-} elsif ($ARGV[0] eq 'history') {
-	@playlist = `cat /tmp/RadioLondres.history`;
+
+	print $javascript;
+
+} elsif ($ARGV[0] eq 'today') {
+	@playlist = `cat /tmp/RadioLondres.today`;
 
 	my $l = $#playlist;
 	while($l >= 0) {
-		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) ([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
-			($time,$song,$ref) = ($1,$3,$4);
-			$song =~ s/\_/ /g;
-			print "<div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div>\n";
-		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) ([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
-			($time,$song,$ref) = ($1,$3,$4);
-			$song =~ s/\_/ /g;
-			print "<div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div>\n";
+		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
+			clean(\$song);
+			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
+		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
+			clean(\$song);
+			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
 		}
 		$l--;
 	}
+} elsif ($ARGV[0] eq 'yesterday') {
+	@playlist = `cat /tmp/RadioLondres.yesterday`;
+
+	my $l = $#playlist;
+	while($l >= 0) {
+		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
+			clean(\$song);
+			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
+		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
+			clean(\$song);
+			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
+		}
+		$l--;
+	}
+} elsif ($ARGV[0] eq 'filter') {
+	print $selector;
 }
