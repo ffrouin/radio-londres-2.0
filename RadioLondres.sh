@@ -73,8 +73,9 @@ function delete_rand {
 case "$1" in
 publish-current)
 	$MPC current > $CURRENT
-	scp $CURRENT YOUR_WEB_HOST:/tmp/ 
-	scp $LOG/$(date +%Y%m%d)_radioLondres.log YOUR_WEB_HOST:/tmp/RadioLondres.history
+	scp $CURRENT YOUR_HOST:/tmp/ 
+	scp $LOG/$(date +%Y%m%d)_radioLondres.log YOUR_HOST:/tmp/RadioLondres.today
+	scp $LOG/$(date +%Y%m%d -d "yesterday")_radioLondres.log YOUR_HOST:/tmp/RadioLondres.yesterday
 	;;
 health)
 	p=$(ps -edf | grep -v grep |grep -c mpd.conf)
@@ -188,7 +189,7 @@ media|humour)
 tools)
 	case "$2" in
 	del)
-		delete $3
+		delete "$3"
 		;;
 	check-playlist)
 		/usr/local/bin/mpc playlist |grep -v chanson|grep -v accordeon|grep -v jazz
