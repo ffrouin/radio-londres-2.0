@@ -36,17 +36,21 @@
 5 9,23 * * * ~/RadioLondres.sh humour add
 5 10,0 * * * ~/RadioLondres.sh humour del
 
+# Musiques du Futur
+0 21 * * * ~/RadioLondres.sh program mdf
+59 23 * * * ~/RadioLondres.sh program RadioLondres
+
 # Gilets Jaunes
-30 * * * * ~/RadioLondres.sh gj add
-55 * * * * ~/RadioLondres.sh gj del
+30 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh gj add
+55 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh gj del
 
 # Violences Policieres
-45 * * * * ~/RadioLondres.sh vp add
-5 * * * * ~/RadioLondres.sh vp del
+45 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh vp add
+5 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh vp del
 
 # Politique
-15 * * * * ~/RadioLondres.sh politique add
-35 * * * * ~/RadioLondres.sh politique del
+15 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh politique add
+35 0,1,2,3,4,5,6,7,8,9,10,12,14,15,16,17,18,19,20 * * * ~/RadioLondres.sh politique del
 
 # Radio Londres
 0 0,1,2,3,4,5,6,8,9,10,12,14,15,16,17,18,19,21,22,23 * * * ~/RadioLondres.sh radioLondres add
