@@ -16,17 +16,25 @@ export ICECAST_PWD=YOUR_PASSWORD
 export MPD=/usr/local/bin/mpd
 export MPC=/usr/local/bin/mpc
 export CURRENT=/var/lib/mpd/RadioLondres/RadioLondres.current
+export CLIENTS=/var/lib/mpd/RadioLondres/RadioLondres.users
 export LAST=/var/lib/mpd/RadioLondres/RadioLondres.last
 export TMP=/var/lib/mpd/RadioLondres/tmp
 export LOG=/var/lib/mpd/RadioLondres/log
 
 function usage {
 	echo "Usage:	$0 {bigben|radioLondres|gj|vp|media|politique|humour} {add|del}" 
+	echo "	$0 program {RadioLondres|mdf}"
 	echo "	$0 {health|publish-current|log}"
 	echo
 	echo "	$0 tools del <song_name>"
-	echo "	$0 tools {check-playlist|reload|init|yt-sources|tt-sources}"
+	echo "	$0 tools length {bigben|radioLondres|gj|vp|media|politique|humour}"
+	echo "	$0 tools {check-playlist|reload|init}"
+	echo "	$0 tools {yt-sources|tt-sources}"
 	exit 1;
+}
+
+function geoip_log {
+	cat $CLIENTS | while read line; do echo "[$(date)] $line" >>$LOG/$(date +%Y%m%d)_geoip_radioLondres.log; done
 }
 
 function log {
@@ -75,6 +83,7 @@ publish-current)
 	$MPC current > $CURRENT
 	scp $CURRENT YOUR_HOST:/tmp/ 
 	scp $LOG/$(date +%Y%m%d)_radioLondres.log YOUR_HOST:/tmp/RadioLondres.today
+	scp $CLIENTS YOUR_HOST:/tmp/RadioLondres.users
 	scp $LOG/$(date +%Y%m%d -d "yesterday")_radioLondres.log YOUR_HOST:/tmp/RadioLondres.yesterday
 	;;
 health)
@@ -91,6 +100,7 @@ health)
 	esac
 	;;
 log)
+	geoip_log
 	for i in `seq 1 58`;
 	do
 		sleep 1
@@ -102,6 +112,32 @@ log)
 			echo "[$(date)]	[HQ:$CLIENTS LOW:$CLIENTS_LOW] $($MPC status | head -1)" >>$LOG/$(date +%Y%m%d)_radioLondres.log
 		fi
 	done
+	;;
+program)
+	case "$2" in
+	mdf)
+		$MPC rm RadioLondres
+		$MPC save RadioLondres
+		$MPC current > $TMP/RadioLondres_program_$2.last
+		$MPC crop
+		$MPC ls mdf |$MPC add
+                for i in `seq 1 100`; do
+                        $MPC shuffle
+                done
+		$MPC next
+		delete "$(cat $TMP/RadioLondres_program_$2.last)"
+		;;
+	RadioLondres)
+		$MPC current > $TMP/RadioLondres_program_$2.last
+		$MPC crop
+		$MPC load RadioLondres
+		$MPC next
+		delete "$(cat $TMP/RadioLondres_program_$2.last)"
+		;;
+	*)
+		usage;
+		;;
+	esac
 	;;
 bigben)
 	case "$2" in
@@ -156,11 +192,28 @@ vp)
                 ;;
 	esac
 	;;
-gj|politique)
+gj)
 	case "$2" in
 	add)
 		insert jingle/$1_footer.ogg
 		insert_rand $1
+		insert jingle/$1_header.ogg
+		;;
+	del)
+		delete jingle/$1_header.ogg
+		delete_rand $1
+		delete jingle/$1_footer.ogg
+		;;
+	*)
+		usage
+		;;
+	esac
+	;;
+politique)
+	case "$2" in
+	add)
+		insert jingle/$1_footer.ogg
+		insert_rand $1 3
 		insert jingle/$1_header.ogg
 		;;
 	del)
@@ -191,8 +244,11 @@ tools)
 	del)
 		delete "$3"
 		;;
+	length)
+		echo -n "$3 : " && cd "/var/lib/mpd/music/$3" && ogginfo *.ogg |grep Playback | awk '{print $3}' | awk -F: '{print $1 " " $2}' | perl -pe 's/(\d+)m\s([\d\.]+)s/$1 $2/' | awk '{ sum += (($1*60)+$2) } END { print sum/3600 }' | awk -F. '{print $1 "h" ($2*6)}' | perl -pe 's/^(\d+h\d{2})\d+$/$1/'
+		;;
 	check-playlist)
-		/usr/local/bin/mpc playlist |grep -v chanson|grep -v accordeon|grep -v jazz
+		$MPC playlist |grep -v chanson|grep -v accordeon|grep -v jazz
 		;;
 	reload)
 		$MPC update

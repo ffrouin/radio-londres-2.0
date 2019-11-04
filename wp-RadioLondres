@@ -14,6 +14,8 @@ sub getCat {
 		return('#ViolencesPolicieres');
 	} elsif ($_[0] eq 'cnr') {
 		return("#CNR");
+	} elsif ($_[0] eq 'mdf') {
+		return("Musiques du Futur");
 	}
 	return($_[0]);
 }
@@ -37,6 +39,7 @@ addSelector(\$selector,'politique','Politique');
 addSelector(\$selector,'vp','#ViolencesPolicieres');
 addSelector(\$selector,'humour','humour');
 addSelector(\$selector,'media','media');
+addSelector(\$selector,'mdf','Musiques du Futur');
 $selector   .= '</div>';
 
 my $javascript = '<script type="text/javascript" src="/wp-content/themes/osmosis-child/radiolondres.js"></script>';
@@ -64,11 +67,11 @@ if ($ARGV[0] eq 'current') {
 
 	my $l = $#playlist;
 	while($l >= 0) {
-		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CES?T \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
 			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
 			clean(\$song);
 			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
-		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CES?T \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
 			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
 			clean(\$song);
 			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
@@ -80,11 +83,11 @@ if ($ARGV[0] eq 'current') {
 
 	my $l = $#playlist;
 	while($l >= 0) {
-		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
+		if($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CES?T \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-([\w\-]{11})[\-\_]?\d?\d?\.ogg$/) {
 			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
 			clean(\$song);
 			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://www.youtube.com/watch?v=$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
-		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CEST \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
+		} elsif ($playlist[$l] =~ / (\d{2}:\d{2}:\d{2}) CES?T \d{4}\][\t\s]+\[HQ:(\d+) LOW:(\d+)\][\s\t]+([^\/]+)\/(.+)\-(\d{19})[\-\_]?\d?\d?\.ogg$/) {
 			($time,$users,$users_low,$cat,$song,$ref) = ($1,$2,$3,$4,$5,$6);
 			clean(\$song);
 			print "<div class=\"rl-entry\"><div class=\"rl-history-time\">$time</div><div class=\"rl-history-song\"><a href=\"https://twitter.com/Reporterre/status/$ref\" target=\"_blank\">$song</a></div><div class=\"rl-category\">".getCat($cat)."</div><div class=\"rl-users\">".($users+$users_low)."</div></div>\n";
@@ -93,4 +96,18 @@ if ($ARGV[0] eq 'current') {
 	}
 } elsif ($ARGV[0] eq 'filter') {
 	print $selector;
+} elsif ($ARGV[0] eq 'clients') {
+	my @clients = `cat /tmp/RadioLondres.users`;
+
+	print "<div class=\"rl-geoip\">\n";
+	foreach (@clients) {
+		if (/^(\w{2})\s+(.+)\s+([\dN\/A]+)$/) {
+			print "	<div class=\"rl-geoip-client\">\n";
+			print "		<div class=\"rl-geoip-country\"><img src=\"/wp-content/themes/osmosis-child/flags/".lc($1).".png\"></div>\n";
+			print "		<div class=\"rl-geoip-city\">$2</div>\n";
+			print "		<div class=\"rl-geoip-region\">$3</div>\n";
+			print "	</div>\n";
+		}
+	}
+	print "</div>\n";
 }
